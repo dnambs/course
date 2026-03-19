@@ -12,6 +12,8 @@ Follow the instructions here https://dbtsetup.nordquant.com/ to set up your Snow
 ## Snowflake data import (manual)
 _Only execute these commands if you decided to skip the Automated Snowflake Setup._
 
+It you want to generate key pairs on Windows, PuttyGen is quite intuitive. If you want more guidance of these, [please refer to this walkthrough](https://www.ssh.com/academy/ssh/putty/windows/puttygen).
+
 Resources presented:
 * [Snowflake Key-Pair Authentication page](https://docs.snowflake.com/en/user-guide/key-pair-auth)
 * [PuttyGen for Windows](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
@@ -164,6 +166,11 @@ uv sync
 venv\Scripts\activate
 # Activate virtualenv on Mac:
 source venv/bin/activate
+```
+
+_Note:_ In some edge cases you might receive a _Permission Error_ message from PowerShell. In this case, students found executing this message solve the error:
+```
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ```
 
 ## dbt Project Setup
@@ -621,6 +628,11 @@ unit_tests:
 dbt test -s mart_fullmoon_reviews
 ```
 
+### Executing only unit tests
+```sh
+dbt test -s "test_type:unit"
+```
+
 ## Contracts
 Add this to `models/schema.yml`:
 ```
@@ -651,7 +663,7 @@ Create a singular test in `tests/consistent_created_at.sql` that checks that the
 SELECT * FROM {{ ref('dim_listings_cleansed') }} l
 INNER JOIN {{ ref('fct_reviews') }} r
 USING (listing_id)
-WHERE l.created_at >= r.review_date
+WHERE l.created_at > r.review_date
 ```
 
 ## Custom Generic Tests
