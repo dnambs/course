@@ -1,0 +1,17 @@
+
+exposures:
+  - name: executive_dashboard
+    label: Executive Dashboard
+    type: dashboard
+    maturity: low
+    url: https://40cd5bdd.us1a.app.preset.io/superset/dashboard/8/?edit=true&native_filters_key=xzv6KdDHKTixUxu0Nr2IUK4o_wGe-4jByZevp1Ap_r7oXFnj3VfmFfJqYz8UgtFw
+    description: Executive Dashboard about Airbnb listings and hosts
+
+
+    depends_on:
+      - ref('dim_listings_w_hosts')
+      - ref('mart_fullmoon_reviews')
+
+    owner:
+      name: Dev N
+      email: dbtstudent@gmail.com
